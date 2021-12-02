@@ -2,19 +2,28 @@
   <div v-if="loading">Loading...</div>
   <table v-else>
     <thead>
-      <TableHead head="User Id" />
-      <TableHead head="Id" />
-      <TableHead head="Title" />
       <TableHead
-        head="Completed
-      "
+        showSorter
+        showFilter
+        head="User Id"
+        v-on:sort="toggleSort('userId')"
+        v-on:filter="toggleFilter('userId')"
+        v-model="filterValue"
+      />
+      <TableHead showSorter head="Id" v-on:sort="toggleSort('id')" />
+      <TableHead showSorter head="Title" v-on:sort="toggleSort('title')" />
+      <TableHead
+        showFilter
+        head="Completed"
+        v-on:filter="toggleFilter('completed')"
+        v-model="filterValue"
       />
     </thead>
-    <tbody v-for="item in todos" :key="item.id">
+    <tbody v-for="item in memoizedTodos" :key="item.id">
       <TableRow>
         <TableCell :value="item.userId" />
         <TableCell :value="item.id" />
-        <TableCell :value="item.title" />
+        <TableCell :isBig="true" :value="item.title" />
         <TableCell :value="item.completed" />
       </TableRow>
     </tbody>
@@ -27,6 +36,7 @@ import TableHead from "./TableHead.vue";
 import TableRow from "./TableRow.vue";
 
 import axios from "axios";
+import { orderBy } from "lodash/collection";
 export default {
   components: { TableHead, TableCell, TableRow },
   name: "Table",
@@ -34,6 +44,10 @@ export default {
     return {
       todos: null,
       loading: true,
+      sortProp: "",
+      sortDirection: "",
+      filterProp: "",
+      filterValue: "",
     };
   },
   mounted() {
@@ -42,5 +56,38 @@ export default {
       .then((response) => (this.todos = response.data))
       .finally(() => (this.loading = false));
   },
+  computed: {
+    memoizedTodos() {
+      let res;
+      if (!this.sortProp) {
+        res = this.todos;
+      }
+      res = orderBy(this.todos, [this.sortProp], [this.sortDirection]);
+      if (this.filterValue) {
+        res = res.filter((row) =>
+          String(row[this.filterProp]).includes(this.filterValue)
+        );
+      }
+      return res;
+    },
+  },
+  methods: {
+    toggleSort(prop) {
+      if (this.sortProp !== prop) this.sortDirection = "";
+      this.sortProp = prop;
+      this.sortDirection =
+        this.sortDirection === "desc" || !this.sortDirection ? "asc" : "desc";
+    },
+    toggleFilter(prop) {
+      this.filterProp = prop;
+      this.filterValue = "";
+    },
+  },
 };
 </script>
+
+<style scoped>
+table {
+  width: 100%;
+}
+</style>
