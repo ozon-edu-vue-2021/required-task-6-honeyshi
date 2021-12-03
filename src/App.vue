@@ -1,18 +1,17 @@
 <template>
   <div id="app">
     <h2>Users' tasks</h2>
-    <Table />
+    <router-link to="/default"> <button>Default table</button> </router-link>
+    <router-link to="/pagination">
+      <button>Pagination table</button>
+    </router-link>
+    <router-view> </router-view>
   </div>
 </template>
 
 <script>
-import Table from "./components/Table.vue";
-
 export default {
   name: "App",
-  components: {
-    Table,
-  },
 };
 </script>
 
