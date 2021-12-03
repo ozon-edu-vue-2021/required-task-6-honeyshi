@@ -4,22 +4,22 @@
       {{ head }}
       <div class="operations">
         <div class="icon-container">
-          <FilterIcon v-if="showFilter" v-on:filter="toggleFilter()" />
           <SorterIcon v-if="showSorter" v-on:sort="sort()" />
         </div>
-        <div v-if="openFilter">
-          <input @change="handleInput" />
-        </div>
       </div>
+    </div>
+    <div class="input-wrapper" v-if="showFilter">
+      <SearchIcon />
+      <input @change="handleInput" @click="filter()" />
     </div>
   </th>
 </template>
 
 <script>
-import FilterIcon from "../icons/FilterIcon.vue";
+import SearchIcon from "../icons/SearchIcon.vue";
 import SorterIcon from "../icons/SorterIcon.vue";
 export default {
-  components: { FilterIcon, SorterIcon },
+  components: { SorterIcon, SearchIcon },
   name: "TableHead",
   props: {
     head: {
@@ -35,11 +35,6 @@ export default {
       type: Boolean,
     },
   },
-  data() {
-    return {
-      openFilter: false,
-    };
-  },
   methods: {
     sort() {
       this.$emit("sort");
@@ -47,8 +42,7 @@ export default {
     handleInput(e) {
       this.$emit("input", e.target.value);
     },
-    toggleFilter() {
-      this.openFilter = !this.openFilter;
+    filter() {
       this.$emit("filter");
     },
   },
@@ -58,8 +52,21 @@ export default {
 <style scoped>
 .wrapper {
   display: flex;
+  margin: 0.5rem;
 }
 .icon-container > svg {
   margin-left: 0.5rem;
+}
+.input-wrapper {
+  background-color: white;
+  border-radius: 0.5rem;
+  border: 1px solid #9fa3a2;
+  display: inline-flex;
+  padding: 0.25rem 0.75rem;
+}
+input {
+  background-color: transparent;
+  border: none;
+  outline: none;
 }
 </style>

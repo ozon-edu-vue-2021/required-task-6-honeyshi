@@ -6,7 +6,6 @@ Vue.use(Router);
 const routes = [
   {
     path: "/",
-    component: { render: (h) => h("div", ["Select table type to view"]) },
   },
   { path: "/default", component: () => import("../components/Table.vue") },
   {
