@@ -1,9 +1,12 @@
 <template>
   <div id="app">
     <h2>Users' tasks</h2>
-    <router-link to="/default"> <button>Default table</button> </router-link>
+    <router-link to="/default"><button>Default table</button></router-link>
     <router-link to="/pagination">
       <button>Pagination table</button>
+    </router-link>
+    <router-link to="/infinite-scroll">
+      <button>Infinite scroll table</button>
     </router-link>
     <router-view> </router-view>
   </div>

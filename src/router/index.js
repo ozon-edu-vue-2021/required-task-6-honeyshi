@@ -13,6 +13,10 @@ const routes = [
     path: "/pagination",
     component: () => import("../components/TablePagination.vue"),
   },
+  {
+    path: "/infinite-scroll",
+    component: () => import("../components/TableInfiniteScroll.vue"),
+  },
 ];
 
 export default new Router({
