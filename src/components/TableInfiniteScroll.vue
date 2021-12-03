@@ -45,7 +45,7 @@ export default {
         const bottom = document
           .getElementById("todos")
           ?.getBoundingClientRect().bottom;
-        if (height === bottom) {
+        if (Math.abs(height - bottom) < 0.5) {
           axios
             .get("https://jsonplaceholder.typicode.com/todos")
             .then(

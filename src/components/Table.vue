@@ -10,8 +10,22 @@
         v-on:filter="toggleFilter('userId')"
         v-model="filterValue"
       />
-      <TableHead showSorter head="Id" v-on:sort="toggleSort('id')" />
-      <TableHead showSorter head="Title" v-on:sort="toggleSort('title')" />
+      <TableHead
+        showSorter
+        showFilter
+        head="Id"
+        v-on:sort="toggleSort('id')"
+        v-on:filter="toggleFilter('id')"
+        v-model="filterValue"
+      />
+      <TableHead
+        showSorter
+        showFilter
+        head="Title"
+        v-on:sort="toggleSort('title')"
+        v-on:filter="toggleFilter('title')"
+        v-model="filterValue"
+      />
       <TableHead
         showFilter
         head="Completed"
