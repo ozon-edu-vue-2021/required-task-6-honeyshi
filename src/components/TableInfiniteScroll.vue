@@ -1,6 +1,5 @@
 <template>
-  <div v-if="loading">Loading...</div>
-  <div v-else id="todos">
+  <Spin :spinning="loading" id="todos">
     <table>
       <thead>
         <TableHead head="User Id" />
@@ -17,7 +16,7 @@
         </TableRow>
       </tbody>
     </table>
-  </div>
+  </Spin>
 </template>
 
 <script>
@@ -29,8 +28,10 @@ import axios from "axios";
 
 import { v4 as uuidv4 } from "uuid";
 
+import { Spin } from "ant-design-vue";
+
 export default {
-  components: { TableHead, TableCell, TableRow },
+  components: { TableHead, TableCell, TableRow, Spin },
   name: "TableInfiniteScroll",
   data() {
     return {
@@ -46,11 +47,11 @@ export default {
           .getElementById("todos")
           ?.getBoundingClientRect().bottom;
         if (Math.abs(height - bottom) < 0.5) {
+          this.loading = true;
           axios
             .get("https://jsonplaceholder.typicode.com/todos")
-            .then(
-              (response) => (this.todos = this.todos.concat(response.data))
-            );
+            .then((response) => (this.todos = this.todos.concat(response.data)))
+            .finally(() => (this.loading = false));
         }
       };
     },

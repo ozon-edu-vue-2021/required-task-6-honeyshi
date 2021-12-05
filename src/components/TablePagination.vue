@@ -1,6 +1,5 @@
 <template>
-  <div v-if="loading">Loading...</div>
-  <div v-else>
+  <Spin :spinning="loading">
     <table>
       <thead>
         <TableHead head="User Id" />
@@ -18,7 +17,7 @@
       </tbody>
     </table>
     <Pagination v-model="currentPage" :total="todos.length" />
-  </div>
+  </Spin>
 </template>
 
 <script>
@@ -26,12 +25,12 @@ import TableCell from "./TableCell.vue";
 import TableHead from "./TableHead.vue";
 import TableRow from "./TableRow.vue";
 
-import { Pagination } from "ant-design-vue";
+import { Pagination, Spin } from "ant-design-vue";
 
 import axios from "axios";
 
 export default {
-  components: { TableHead, TableCell, TableRow, Pagination },
+  components: { TableHead, TableCell, TableRow, Pagination, Spin },
   name: "TablePagination",
   data() {
     return {
