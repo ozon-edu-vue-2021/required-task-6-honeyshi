@@ -1,47 +1,48 @@
 <template>
-  <div v-if="loading">Loading...</div>
-  <table v-else>
-    <thead>
-      <TableHead
-        showSorter
-        showFilter
-        head="User Id"
-        v-on:sort="toggleSort('userId')"
-        v-on:filter="toggleFilter('userId')"
-        v-model="filterValue"
-      />
-      <TableHead
-        showSorter
-        showFilter
-        head="Id"
-        v-on:sort="toggleSort('id')"
-        v-on:filter="toggleFilter('id')"
-        v-model="filterValue"
-      />
-      <TableHead
-        showSorter
-        showFilter
-        head="Title"
-        v-on:sort="toggleSort('title')"
-        v-on:filter="toggleFilter('title')"
-        v-model="filterValue"
-      />
-      <TableHead
-        showFilter
-        head="Completed"
-        v-on:filter="toggleFilter('completed')"
-        v-model="filterValue"
-      />
-    </thead>
-    <tbody v-for="item in memoizedTodos" :key="item.id">
-      <TableRow>
-        <TableCell :value="item.userId" />
-        <TableCell :value="item.id" />
-        <TableCell :isBig="true" :value="item.title" />
-        <TableCell :value="item.completed" />
-      </TableRow>
-    </tbody>
-  </table>
+  <Spin :spinning="loading">
+    <table>
+      <thead>
+        <TableHead
+          showSorter
+          showFilter
+          head="User Id"
+          v-on:sort="toggleSort('userId')"
+          v-on:filter="toggleFilter('userId')"
+          v-model="filterValue"
+        />
+        <TableHead
+          showSorter
+          showFilter
+          head="Id"
+          v-on:sort="toggleSort('id')"
+          v-on:filter="toggleFilter('id')"
+          v-model="filterValue"
+        />
+        <TableHead
+          showSorter
+          showFilter
+          head="Title"
+          v-on:sort="toggleSort('title')"
+          v-on:filter="toggleFilter('title')"
+          v-model="filterValue"
+        />
+        <TableHead
+          showFilter
+          head="Completed"
+          v-on:filter="toggleFilter('completed')"
+          v-model="filterValue"
+        />
+      </thead>
+      <tbody v-for="item in memoizedTodos" :key="item.id">
+        <TableRow>
+          <TableCell :value="item.userId" />
+          <TableCell :value="item.id" />
+          <TableCell :isBig="true" :value="item.title" />
+          <TableCell :value="item.completed" />
+        </TableRow>
+      </tbody>
+    </table>
+  </Spin>
 </template>
 
 <script>
@@ -51,8 +52,10 @@ import TableRow from "./TableRow.vue";
 
 import axios from "axios";
 import { orderBy } from "lodash/collection";
+import { Spin } from "ant-design-vue";
+
 export default {
-  components: { TableHead, TableCell, TableRow },
+  components: { TableHead, TableCell, TableRow, Spin },
   name: "Table",
   data() {
     return {
