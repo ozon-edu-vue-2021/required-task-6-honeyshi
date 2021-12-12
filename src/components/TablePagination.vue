@@ -16,7 +16,7 @@
         </TableRow>
       </tbody>
     </table>
-    <Pagination v-model="currentPage" :total="todos.length" />
+    <Pagination v-model="currentPage" :total="amountPages" />
   </Spin>
 </template>
 
@@ -44,7 +44,10 @@ export default {
     memoizedTodos() {
       const startIndex = this.pageSize * (this.currentPage - 1);
       const endIndex = startIndex + (this.pageSize - 1);
-      return this.todos.slice(startIndex, endIndex);
+      return this.todos ? this.todos.slice(startIndex, endIndex) : [];
+    },
+    amountPages() {
+      return this.todos ? this.todos.length : 0;
     },
   },
   mounted() {

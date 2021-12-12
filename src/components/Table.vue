@@ -8,7 +8,8 @@
           head="User Id"
           v-on:sort="toggleSort('userId')"
           v-on:filter="toggleFilter('userId')"
-          v-model="filterValue"
+          :onFilter="setFilterText"
+          :filterText="filteredValue('userId')"
         />
         <TableHead
           showSorter
@@ -16,7 +17,8 @@
           head="Id"
           v-on:sort="toggleSort('id')"
           v-on:filter="toggleFilter('id')"
-          v-model="filterValue"
+          :onFilter="setFilterText"
+          :filterText="filteredValue('id')"
         />
         <TableHead
           showSorter
@@ -24,13 +26,15 @@
           head="Title"
           v-on:sort="toggleSort('title')"
           v-on:filter="toggleFilter('title')"
-          v-model="filterValue"
+          :onFilter="setFilterText"
+          :filterText="filteredValue('title')"
         />
         <TableHead
           showFilter
           head="Completed"
           v-on:filter="toggleFilter('completed')"
-          v-model="filterValue"
+          :onFilter="setFilterText"
+          :filterText="filteredValue('completed')"
         />
       </thead>
       <tbody v-for="item in memoizedTodos" :key="item.id">
@@ -96,8 +100,14 @@ export default {
         this.sortDirection === "desc" || !this.sortDirection ? "asc" : "desc";
     },
     toggleFilter(prop) {
-      this.filterProp = prop;
       this.filterValue = "";
+      this.filterProp = prop;
+    },
+    setFilterText(e) {
+      this.filterValue = e.target.value;
+    },
+    filteredValue(prop) {
+      return prop === this.filterProp ? this.filterValue : "";
     },
   },
 };

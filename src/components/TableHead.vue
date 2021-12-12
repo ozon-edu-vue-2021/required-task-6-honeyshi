@@ -10,7 +10,7 @@
     </div>
     <div class="input-wrapper" v-if="showFilter">
       <SearchIcon />
-      <input @change="handleInput" @click="filter()" />
+      <input @change="onFilter" :value="filterText" @click="filter" />
     </div>
   </th>
 </template>
@@ -33,6 +33,11 @@ export default {
     showSorter: {
       default: false,
       type: Boolean,
+    },
+    onFilter: Function,
+    filterText: {
+      default: "",
+      type: String,
     },
   },
   methods: {
